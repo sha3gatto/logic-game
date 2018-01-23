@@ -133,7 +133,7 @@ function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame,
 						<td>
 							<input type="hidden" value="<?php echo $currentDirLeft; ?>" name="current_dir_left">
 							<div class="picture"><img src="<?php echo $pictures[substr($v, 0, 1)]; ?>"></div>
-							<div class="box"><input type="checkbox" value="<?php echo $v; ?>" name="liveStockLeft[<?php echo $k; ?>]" class="<?php if ($arrow === 'toLeft') { echo 'to-left-off'; } ?>"></div>
+							<div class="box"><input type="checkbox" value="<?php echo $v; ?>" name="liveStockLeft[<?php echo $k; ?>]" class="<?php if ($arrow === 'toLeft' || ($arrow === 'toRight' && ($v === 'e' || $v === 'g'))) { echo 'to-left-off'; } ?>"></div>
 						</td>
 					<?php } ?>
 						<td>
@@ -143,7 +143,7 @@ function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame,
 						<td>
 							<input type="hidden" value="<?php echo $currentDirRight; ?>" name="current_dir_right">
 							<div class="picture"><img src="<?php echo $pictures[substr($v, 0, 1)]; ?>"></div>
-							<div class="box"><input type="checkbox" value="<?php echo $v; ?>" name="liveStockRight[<?php echo $k; ?>]" class="<?php if ($arrow === 'toRight') { echo 'to-right-off'; } ?>"></div>
+							<div class="box"><input type="checkbox" value="<?php echo $v; ?>" name="liveStockRight[<?php echo $k; ?>]" class="<?php if ($arrow === 'toRight' || ($arrow === 'toLeft' && ($v === 'e' || $v === 'g'))) { echo 'to-right-off'; } ?>"></div>
 						</td>
 					<?php } ?>
 				</tr>
