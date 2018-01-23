@@ -133,7 +133,7 @@ function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame,
 						<td>
 							<input type="hidden" value="<?php echo $currentDirLeft; ?>" name="current_dir_left">
 							<div class="picture"><img src="<?php echo $pictures[substr($v, 0, 1)]; ?>"></div>
-							<div class="box"><input type="checkbox" value="<?php echo $v; ?>" name="liveStockLeft[<?php echo $k; ?>]" class="<?php if ($arrow === 'toLeft' || ($arrow === 'toRight' && ($v === 'e' || $v === 'g'))) { echo 'to-left-off'; } ?>"></div>
+							<div id="leftWing_<?php echo $k; ?>" class="box"><input type="checkbox" value="<?php echo $v; ?>" name="liveStockLeft[<?php echo $k; ?>]" class="<?php if ($arrow === 'toLeft' || ($arrow === 'toRight' && ($v === 'e' || $v === 'g'))) { echo 'to-left-off'; } ?>"></div>
 						</td>
 					<?php } ?>
 						<td>
@@ -143,14 +143,14 @@ function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame,
 						<td>
 							<input type="hidden" value="<?php echo $currentDirRight; ?>" name="current_dir_right">
 							<div class="picture"><img src="<?php echo $pictures[substr($v, 0, 1)]; ?>"></div>
-							<div class="box"><input type="checkbox" value="<?php echo $v; ?>" name="liveStockRight[<?php echo $k; ?>]" class="<?php if ($arrow === 'toRight' || ($arrow === 'toLeft' && ($v === 'e' || $v === 'g'))) { echo 'to-right-off'; } ?>"></div>
+							<div id="rightWing_<?php echo $k; ?>" class="box"><input type="checkbox" value="<?php echo $v; ?>" name="liveStockRight[<?php echo $k; ?>]" class="<?php if ($arrow === 'toRight' || ($arrow === 'toLeft' && ($v === 'e' || $v === 'g'))) { echo 'to-right-off'; } ?>"></div>
 						</td>
 					<?php } ?>
 				</tr>
 			</tbody>
 		</table>
 		<div class="reset-game">
-			<a href="?reset=1">Reset Gry</a>
+			<a href="?reset=1">Let's play again</a>
 		</div>
 	</form><?php
 }
@@ -174,8 +174,20 @@ function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame,
 				display: none;
 			}
 		</style>
+		<script src="node_modules/jquery/dist/jquery.min.js"></script>
 	</head>
 	<body>
 		<?php drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame, $currentDirLeft, $currentDirRight, $arrow); ?>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$( "div[id^='leftWing_']" ).click(function(){
+					var count = $( "input:checked" ).length, max = 2;
+					if (count > max) {
+						alert('Please select only ' + max + ' checkboxes.');
+						$( "div[id^='" + this.id + "'] input" ).prop('checked', false);
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
