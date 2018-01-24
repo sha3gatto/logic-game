@@ -5,8 +5,10 @@ $pictures = ['p'=>'priest.png', 'd'=>'devil.png', 'e'=>'empty.png', 'g'=>'grave.
 $arrow = 'toRight';
 $currentDirLeft = true;
 $currentDirRight = false;
+$grave = false;
+$endGame = false;
 
-if ($_GET["reset"] == 1) {
+if (!empty($_GET["reset"]) && $_GET["reset"] == 1) {
 	
 	if (ini_get("session.use_cookies")) {
 		$params = session_get_cookie_params();
@@ -20,11 +22,11 @@ if ($_GET["reset"] == 1) {
 }
 
 // zmienia kierunek poruszania: z lewego brzegu na prawy i odwrotnie
-if ($_POST['current_dir_left'] == 1 && $currentDirLeft == true) {
+if ((!empty($_POST['current_dir_left']) && $_POST['current_dir_left'] == 1) && $currentDirLeft == true) {
 	$currentDirLeft = false;
 	$currentDirRight = true;
 	$arrow = 'toLeft';
-} elseif ($_POST['current_dir_right'] == 1 && $currentDirRight == true) {
+} elseif ((!empty($_POST['current_dir_right']) && $_POST['current_dir_right'] == 1) && $currentDirRight == true) {
 	$currentDirRight = false;
 	$currentDirLeft = true;
 	$arrow = 'toRight';
@@ -32,8 +34,7 @@ if ($_POST['current_dir_left'] == 1 && $currentDirLeft == true) {
 
 if (!empty($_POST["action"])) {
 	$liveStock = prepareLiveStock($liveStockLeft, $liveStockRight);
-	$grave = false;
-	$endGame = false;
+	
 	if (checkConflict($liveStock)) {
 		// pokaż obrazek grave dla priests i zakończ grę
 		$grave = true;
@@ -149,13 +150,20 @@ function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame,
 				</tr>
 			</tbody>
 		</table>
+		<div class="caption">
+			<div class="left-side">
+				<p>Transfer of people from one country</p>
+			</div>
+			<div class="right-side">
+				<p>to another.</p>
+			</div>
+		</div>
 		<div class="reset-game">
 			<a href="?reset=1">Let's play again</a>
 		</div>
 	</form><?php
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -173,6 +181,18 @@ function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame,
 			.to-right-off {
 				display: none;
 			}
+			.caption {
+				width: 100%;
+				float: left;
+			}
+			.left-side {
+				width: 50%;
+				float: left;
+			}
+			.right-side {
+				width: 50%;
+				float: left;
+			}
 		</style>
 		<script src="node_modules/jquery/dist/jquery.min.js"></script>
 	</head>
@@ -180,7 +200,7 @@ function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame,
 		<?php drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame, $currentDirLeft, $currentDirRight, $arrow); ?>
 		<script type="text/javascript">
 			$(document).ready(function(){
-				$( "div[id^='leftWing_']" ).click(function(){
+				$( "div[id^='<?php if ($currentDirLeft) { echo "leftWing_"; } elseif ($currentDirRight) { echo "rightWing_"; } ?>']" ).click(function(){
 					var count = $( "input:checked" ).length, max = 2;
 					if (count > max) {
 						alert('Please select only ' + max + ' checkboxes.');
