@@ -126,6 +126,16 @@ function saveEndState($liveStock) {
 }
 
 function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame, $currentDirLeft, $currentDirRight, $arrow) { ?>
+	<div class="caption">
+		<h1>There are 3 devils and 3 Priests.</h1>
+		<p>They all have to cross a river in a boat. Boat can only carry two people at a time.As long as there are equal number of devils and priests, then devils will not eat Priest. If the number of devils are greater than the number of priests on the same side of the river then devils will eat the priests. So how can we make all the 6 peoples to arrive to the other side safely?</p>
+		<div class="left-side">
+			<h3>Transfer of people from one country</h3>
+		</div>
+		<div class="right-side">
+			<h3>to another.</h3>
+		</div>
+	</div>
 	<form action="index.php" method="post" name="boardAction">
 		<table class="drawBoard">
 			<tbody>
@@ -150,14 +160,6 @@ function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame,
 				</tr>
 			</tbody>
 		</table>
-		<div class="caption">
-			<div class="left-side">
-				<p>Transfer of people from one country</p>
-			</div>
-			<div class="right-side">
-				<p>to another.</p>
-			</div>
-		</div>
 		<div class="reset-game">
 			<a href="?reset=1">Let's play again</a>
 		</div>
@@ -202,9 +204,16 @@ function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame,
 			$(document).ready(function(){
 				$( "div[id^='<?php if ($currentDirLeft) { echo "leftWing_"; } elseif ($currentDirRight) { echo "rightWing_"; } ?>']" ).click(function(){
 					var count = $( "input:checked" ).length, max = 2;
+					
 					if (count > max) {
 						alert('Please select only ' + max + ' checkboxes.');
 						$( "div[id^='" + this.id + "'] input" ).prop('checked', false);
+					}
+				});
+				$("form").submit(function(){
+					if ($( "input:checked" ).length === 0) {
+						alert('Please select at least 1 checkbox.');
+						return false;
 					}
 				});
 			});
