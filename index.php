@@ -128,12 +128,13 @@ function saveEndState($liveStock) {
 function drawBoard($liveStockLeft, $liveStockRight, $pictures, $grave, $endGame, $currentDirLeft, $currentDirRight, $arrow) { ?>
 	<div class="caption">
 		<h1>There are 3 devils and 3 Priests.</h1>
-		<p>They all have to cross a river in a boat. Boat can only carry two people at a time.As long as there are equal number of devils and priests, then devils will not eat Priest. If the number of devils are greater than the number of priests on the same side of the river then devils will eat the priests. So how can we make all the 6 peoples to arrive to the other side safely?</p>
+		<p>They all have to cross a river in a boat. Boat can only carry two people at a time.As long as there are equal number of devils and priests, then devils will not eat Priest. If the number of devils are greater than the number of priests on the same side of the river then devils will eat the priests.</p>
+		<h3>You must transfer all the 6 people across the river</h3>
 		<div class="left-side">
-			<h3>Transfer of people from one country</h3>
+			<h3>from one side</h3>
 		</div>
 		<div class="right-side">
-			<h3>to another.</h3>
+			<h3>to the other side, safely.</h3>
 		</div>
 	</div>
 	<form action="index.php" method="post" name="boardAction">
